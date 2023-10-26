@@ -1,166 +1,117 @@
+import 'package:expo_scroll/main.dart';
+import 'package:expo_scroll/view/page1.dart';
+import 'package:expo_scroll/view/page2.dart';
 import 'package:flutter/material.dart';
 
-/// Flutter code sample for [NavigationDrawer].
+import 'page3.dart';
 
-class ExampleDestination {
-  const ExampleDestination(this.label, this.icon, this.selectedIcon);
-
-  final String label;
-  final Widget icon;
-  final Widget selectedIcon;
-}
-
-const List<ExampleDestination> destinations = <ExampleDestination>[
-  ExampleDestination(
-      'page 0', Icon(Icons.widgets_outlined), Icon(Icons.widgets)),
-  ExampleDestination(
-      'page 1', Icon(Icons.format_paint_outlined), Icon(Icons.format_paint)),
-  ExampleDestination(
-      'page 2', Icon(Icons.text_snippet_outlined), Icon(Icons.text_snippet)),
-  ExampleDestination(
-      'page 3', Icon(Icons.invert_colors_on_outlined), Icon(Icons.opacity)),
-];
-
-class NavigationDrawerExample extends StatefulWidget {
-  const NavigationDrawerExample({super.key});
-
+class MyDrawer extends StatefulWidget {
   @override
-  State<NavigationDrawerExample> createState() =>
-      _NavigationDrawerExampleState();
+  State<MyDrawer> createState() => _MyDrawerState();
 }
 
-class _NavigationDrawerExampleState extends State<NavigationDrawerExample> {
-  final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
+class _MyDrawerState extends State<MyDrawer> {
+  int _item = 0;
 
-  int screenIndex = 0;
-  late bool showNavigationDrawer;
+  getDrawerItemWidget(int pos) {
+    switch (pos) {
+      case 0:
+        // ignore: prefer_const_constructors
+        return MyApp();
+      case 1:
+        return config();
+      case 2:
+        return (able);
+      case 3:
+        return ScrollableExample();
+      // case 4:
+      //   return ();
+    }
+  }
 
-  void handleScreenChanged(int selectedScreen) {
+  void _SetItemDrawer(int position) {
+    Navigator.pop(context);
     setState(() {
-      screenIndex = selectedScreen;
+      _item = position;
     });
-  }
-
-  void openDrawer() {
-    scaffoldKey.currentState!.openEndDrawer();
-  }
-
-  Widget buildBottomBarScaffold() {
-    return Scaffold(
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: <Widget>[
-            Text('Page Index =  $screenIndex'),
-          ],
-        ),
-      ),
-      bottomNavigationBar: NavigationBar(
-        selectedIndex: screenIndex,
-        onDestinationSelected: (int index) {
-          setState(() {
-            screenIndex = index;
-          });
-        },
-        destinations: destinations.map(
-          (ExampleDestination destination) {
-            return NavigationDestination(
-              label: destination.label,
-              icon: destination.icon,
-              selectedIcon: destination.selectedIcon,
-              tooltip: destination.label,
-            );
-          },
-        ).toList(),
-      ),
-    );
-  }
-
-  Widget buildDrawerScaffold(BuildContext context) {
-    return Scaffold(
-      key: scaffoldKey,
-      body: SafeArea(
-        bottom: false,
-        top: false,
-        child: Row(
-          children: <Widget>[
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 5),
-              child: NavigationRail(
-                minWidth: 50,
-                destinations: destinations.map(
-                  (ExampleDestination destination) {
-                    return NavigationRailDestination(
-                      label: Text(destination.label),
-                      icon: destination.icon,
-                      selectedIcon: destination.selectedIcon,
-                    );
-                  },
-                ).toList(),
-                selectedIndex: screenIndex,
-                useIndicator: true,
-                onDestinationSelected: (int index) {
-                  setState(() {
-                    screenIndex = index;
-                  });
-                },
-              ),
-            ),
-            const VerticalDivider(thickness: 1, width: 1),
-            Expanded(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: <Widget>[
-                  Text('Page Index =  $screenIndex'),
-                  ElevatedButton(
-                    onPressed: openDrawer,
-                    child: const Text('Open Drawer'),
-                  ),
-                ],
-              ),
-            ),
-          ],
-        ),
-      ),
-      endDrawer: NavigationDrawer(
-        onDestinationSelected: handleScreenChanged,
-        selectedIndex: screenIndex,
-        children: <Widget>[
-          Padding(
-            padding: const EdgeInsets.fromLTRB(28, 16, 16, 10),
-            child: Text(
-              'Header',
-              style: Theme.of(context).textTheme.titleSmall,
-            ),
-          ),
-          ...destinations.map(
-            (ExampleDestination destination) {
-              return NavigationDrawerDestination(
-                label: Text(destination.label),
-                icon: destination.icon,
-                selectedIcon: destination.selectedIcon,
-              );
-            },
-          ),
-          const Padding(
-            padding: EdgeInsets.fromLTRB(28, 16, 28, 10),
-            child: Divider(),
-          ),
-        ],
-      ),
-    );
-  }
-
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    showNavigationDrawer = MediaQuery.of(context).size.width >= 450;
   }
 
   @override
   Widget build(BuildContext context) {
-    return showNavigationDrawer
-        ? buildDrawerScaffold(context)
-        : buildBottomBarScaffold();
+    return Scaffold(
+      drawer: Drawer(
+        child: ListView(
+          padding: EdgeInsets.zero,
+          children: <Widget>[
+            DrawerHeader(
+              decoration: BoxDecoration(
+                color: Colors.black38,
+              ),
+              child: Text(
+                'menu de navegacion',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 24,
+                ),
+              ),
+            ),
+            ListTile(
+              selected: (0 == _item),
+              leading: Icon(Icons.navigate_next_sharp),
+              title: Text('ScrollBar'),
+              onTap: () {
+                _SetItemDrawer(0);
+              },
+            ),
+            // Divider(
+            //   color: Colors.black,
+            // ),
+            ListTile(
+              selected: (1 == _item),
+              leading: Icon(Icons.navigate_next_sharp),
+              title: Text('Scrollconfig'),
+              onTap: () {
+                _SetItemDrawer(1);
+              },
+            ),
+            ListTile(
+              selected: (2 == _item),
+              leading: Icon(Icons.navigate_next_sharp),
+              title: Text('ScrollAble'),
+              onTap: () {
+                _SetItemDrawer(2);
+              },
+            ),
+            ListTile(
+              selected: (2 == _item),
+              leading: Icon(Icons.navigate_next_sharp),
+              title: Text('ScrollAble2'),
+              onTap: () {
+                _SetItemDrawer(2);
+              },
+            ),
+          ],
+        ),
+      ),
+      body: _getDrawerItemWidget(_item),
+    );
+  }
+
+  Widget _getDrawerItemWidget(int pos) {
+    switch (pos) {
+      case 0:
+        return MyApp();
+      case 1:
+        return config();
+      case 2:
+        return able();
+      case 3:
+        return ScrollableExample();
+      // Agrega más casos según las páginas que quieras mostrar.
+      default:
+        return Center(
+          child: Text('Página no encontrada'),
+        );
+    }
   }
 }

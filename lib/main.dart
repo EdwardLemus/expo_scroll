@@ -1,7 +1,7 @@
+import 'package:expo_scroll/view/home.dart';
 import 'package:flutter/material.dart';
 
 import 'view/drawer.dart';
-import 'view/home.dart';
 
 void main() {
   runApp(const MyApp());
@@ -19,7 +19,10 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const NavigationDrawerExample(),
+      home: MyHomePage(
+        title: 'home',
+        drawer: MyDrawer(),
+      ),
     );
   }
 }

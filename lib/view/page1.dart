@@ -1,22 +1,14 @@
 import 'package:flutter/material.dart';
 
-void main() {
-  runApp(MyApp());
-}
-
-class MyApp extends StatelessWidget {
+class config extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
-        appBar: AppBar(
-          title: Text('Ejemplo de ScrollConfiguration'),
-        ),
         body: ScrollConfiguration(
-          behavior:
-              ScrollBehavior(), // 1. Comportamiento de desplazamiento personalizado
+          behavior: BasicScrollBehavior(), // Usar BasicScrollBehavior aquí
           child: ListView.builder(
-            itemCount: 100,
+            itemCount: 30,
             itemBuilder: (context, index) {
               return ListTile(
                 title: Text('Elemento $index'),
@@ -26,5 +18,12 @@ class MyApp extends StatelessWidget {
         ),
       ),
     );
+  }
+}
+
+class BasicScrollBehavior extends ScrollBehavior {
+  @override
+  ScrollPhysics getScrollPhysics(BuildContext context) {
+    return ClampingScrollPhysics(); // Utilizar ClampingScrollPhysics como física básica
   }
 }
