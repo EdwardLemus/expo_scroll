@@ -3,8 +3,6 @@ import 'package:expo_scroll/view/page1.dart';
 import 'package:expo_scroll/view/page2.dart';
 import 'package:flutter/material.dart';
 
-import 'page3.dart';
-
 class MyDrawer extends StatefulWidget {
   @override
   State<MyDrawer> createState() => _MyDrawerState();
@@ -21,11 +19,7 @@ class _MyDrawerState extends State<MyDrawer> {
       case 1:
         return config();
       case 2:
-        return (able);
-      case 3:
-        return ScrollableExample();
-      // case 4:
-      //   return ();
+        return able();
     }
   }
 
@@ -39,6 +33,9 @@ class _MyDrawerState extends State<MyDrawer> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Text('menu'),
+      ),
       drawer: Drawer(
         child: ListView(
           padding: EdgeInsets.zero,
@@ -82,14 +79,6 @@ class _MyDrawerState extends State<MyDrawer> {
                 _SetItemDrawer(2);
               },
             ),
-            ListTile(
-              selected: (2 == _item),
-              leading: Icon(Icons.navigate_next_sharp),
-              title: Text('ScrollAble2'),
-              onTap: () {
-                _SetItemDrawer(2);
-              },
-            ),
           ],
         ),
       ),
@@ -105,9 +94,6 @@ class _MyDrawerState extends State<MyDrawer> {
         return config();
       case 2:
         return able();
-      case 3:
-        return ScrollableExample();
-      // Agrega más casos según las páginas que quieras mostrar.
       default:
         return Center(
           child: Text('Página no encontrada'),
