@@ -1,30 +1,32 @@
-import 'package:expo_scroll/view/drawer.dart';
 import 'package:flutter/material.dart';
+import 'package:expo_scroll/view/drawer.dart';
 
 class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title, required MyDrawer drawer});
-
   final String title;
+  final MyDrawer drawer;
+
+  MyHomePage({Key? key, required this.title, required this.drawer})
+      : super(key: key);
 
   @override
-  State<MyHomePage> createState() => _MyHomePageState();
+  _MyHomePageState createState() => _MyHomePageState();
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  final List<String> _items = List.generate(50, (index) => 'Item $index');
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
-      drawer: MyDrawer(),
-      body: Scrollbar(
-        child: SingleChildScrollView(
-          child: Column(
-            children: List.generate(100, (index) {
-              return ListTile(
-                title: Text('Elemento $index'),
-              );
-            }),
-          ),
+      appBar: AppBar(
+        title: Text(widget.title),
+      ),
+      drawer: widget.drawer,
+      body: ScrollConfiguration(
+        behavior: ScrollConfiguration.of(context).copyWith(
+          scrollbars: false, // Desactivar los scrollbars predeterminados
+        ),
+        child: ListView(
+          children: _items.map((item) => ListTile(title: Text(item))).toList(),
         ),
       ),
     );

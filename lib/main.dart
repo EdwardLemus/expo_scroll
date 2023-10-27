@@ -1,14 +1,13 @@
-import 'package:expo_scroll/view/home.dart';
+import 'package:expo_scroll/view/drawer.dart';
 import 'package:flutter/material.dart';
-
-import 'view/drawer.dart';
+import 'package:expo_scroll/view/home.dart';
 
 void main() {
   runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  const MyApp({Key? key});
 
   @override
   Widget build(BuildContext context) {
@@ -16,11 +15,11 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
+        colorScheme: ColorScheme.fromSwatch(primarySwatch: Colors.deepPurple),
+        visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
       home: MyHomePage(
-        title: 'home',
+        title: 'scrolls',
         drawer: MyDrawer(),
       ),
     );

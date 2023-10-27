@@ -5,19 +5,19 @@ class able extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       home: Scaffold(
+        appBar: AppBar(
+          title: Text('Scrollable Example'),
+        ),
         body: Scrollable(
-          // Widget Scrollable
-          viewportBuilder: (BuildContext context, ViewportOffset position) {
-            return SingleChildScrollView(
-              // Widget desplazable
-              child: Column(
-                children: List.generate(20, (index) {
-                  return ListTile(
-                    title: Text('Elemento $index'),
-                  );
-                }),
-              ),
+          viewportBuilder: (BuildContext context, ViewportOffset offset) {
+            return ListView(
+              children: List.generate(50, (index) {
+                return ListTile(
+                  title: Text('Item $index'),
+                );
+              }),
             );
           },
         ),

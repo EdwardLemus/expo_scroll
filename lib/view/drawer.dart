@@ -9,32 +9,26 @@ class MyDrawer extends StatefulWidget {
 }
 
 class _MyDrawerState extends State<MyDrawer> {
-  int _item = 0;
+  int _selectedItem = 0;
 
-  getDrawerItemWidget(int pos) {
-    switch (pos) {
-      case 0:
-        // ignore: prefer_const_constructors
-        return MyApp();
-      case 1:
-        return config();
-      case 2:
-        return able();
-    }
-  }
-
-  void _SetItemDrawer(int position) {
+  void _selectItem(int position) {
     Navigator.pop(context);
     setState(() {
-      _item = position;
+      _selectedItem = position;
     });
   }
+
+  List<Widget> _drawerItems = [
+    MyApp(),
+    config(),
+    able(),
+  ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('menu'),
+        title: Text('Menu'),
       ),
       drawer: Drawer(
         child: ListView(
@@ -45,59 +39,31 @@ class _MyDrawerState extends State<MyDrawer> {
                 color: Colors.black38,
               ),
               child: Text(
-                'menu de navegacion',
+                'Menu de Navegación',
                 style: TextStyle(
                   color: Colors.white,
                   fontSize: 24,
                 ),
               ),
             ),
-            ListTile(
-              selected: (0 == _item),
-              leading: Icon(Icons.navigate_next_sharp),
-              title: Text('ScrollBar'),
-              onTap: () {
-                _SetItemDrawer(0);
-              },
-            ),
-            // Divider(
-            //   color: Colors.black,
-            // ),
-            ListTile(
-              selected: (1 == _item),
-              leading: Icon(Icons.navigate_next_sharp),
-              title: Text('Scrollconfig'),
-              onTap: () {
-                _SetItemDrawer(1);
-              },
-            ),
-            ListTile(
-              selected: (2 == _item),
-              leading: Icon(Icons.navigate_next_sharp),
-              title: Text('ScrollAble'),
-              onTap: () {
-                _SetItemDrawer(2);
-              },
-            ),
+            _buildDrawerItem(0, Icons.navigate_next_sharp, 'ScrollConfig'),
+            _buildDrawerItem(1, Icons.navigate_next_sharp, 'ScrollBar'),
+            _buildDrawerItem(2, Icons.navigate_next_sharp, 'ScrollAble'),
           ],
         ),
       ),
-      body: _getDrawerItemWidget(_item),
+      body: _drawerItems[_selectedItem],
     );
   }
 
-  Widget _getDrawerItemWidget(int pos) {
-    switch (pos) {
-      case 0:
-        return MyApp();
-      case 1:
-        return config();
-      case 2:
-        return able();
-      default:
-        return Center(
-          child: Text('Página no encontrada'),
-        );
-    }
+  Widget _buildDrawerItem(int position, IconData icon, String title) {
+    return ListTile(
+      selected: (position == _selectedItem),
+      leading: Icon(icon),
+      title: Text(title),
+      onTap: () {
+        _selectItem(position);
+      },
+    );
   }
 }
