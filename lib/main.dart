@@ -19,7 +19,7 @@ class MyApp extends StatelessWidget {
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
       home: MyHomePage(
-        title: 'scrolls',
+        title: 'ScrollConfiguration',
         drawer: MyDrawer(),
       ),
     );
