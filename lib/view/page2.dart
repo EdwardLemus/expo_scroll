@@ -13,9 +13,11 @@ class able extends StatelessWidget {
         body: Scrollable(
           viewportBuilder: (BuildContext context, ViewportOffset offset) {
             return Column(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Container(
-                  height: 200, // Altura de la primera lista
+                  color: const Color.fromARGB(255, 82, 34, 255),
+                  height: 300, // Altura de la primera lista
                   child: ListView.builder(
                     itemCount: 20, // Número de elementos en la primera lista
                     itemBuilder: (context, index) {
@@ -27,7 +29,8 @@ class able extends StatelessWidget {
                 ),
                 SizedBox(height: 20), // Espacio vertical entre las listas
                 Container(
-                  height: 200, // Altura de la segunda lista
+                  color: Colors.deepOrange,
+                  height: 300, // Altura de la segunda lista
                   child: ListView.builder(
                     itemCount: 15, // Número de elementos en la segunda lista
                     itemBuilder: (context, index) {
